@@ -109,6 +109,7 @@ Conversation so far:
 {history}
 
 Scammer: {text}
+
 You:
 """
 
