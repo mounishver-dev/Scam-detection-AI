@@ -1,6 +1,6 @@
-# main.py (ONLY for local testing)
+# main.py (LOCAL ONLY)
 
-if __name__ == "__main__":
+def run_local():
     from core import final_detect, qwen_chat
 
     print("Scam Detection System Ready")
@@ -19,10 +19,12 @@ if __name__ == "__main__":
             continue
 
         result = final_detect(text)
-
         print(result)
 
         if result["final"] == "SPAM":
             chat_mode = True
             reply, _ = qwen_chat(text)
             print("🤖 Qwen:", reply)
+
+if __name__ == "__main__":
+    run_local()
