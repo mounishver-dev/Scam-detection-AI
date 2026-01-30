@@ -1,11 +1,17 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from main import final_detect, qwen_chat, chat_history
+
+from main import final_detect   
+from llm import qwen_chat     
 
 app = FastAPI()
 
 class Message(BaseModel):
     text: str
+
+
+chat_history = []
+
 
 @app.post("/detect")
 def detect_message(data: Message):
@@ -13,7 +19,7 @@ def detect_message(data: Message):
 
     final_result, rule_r, ml_r, llama_r, qwen_r = final_detect(text)
 
-    response = {
+    return {
         "text": text,
         "rules": rule_r,
         "ml": ml_r,
@@ -22,15 +28,20 @@ def detect_message(data: Message):
         "final_result": final_result
     }
 
-    return response
-
 
 @app.post("/chat")
 def chat_with_scammer(data: Message):
+    global chat_history
+
     text = data.text
-    reply = qwen_chat(text, "\n".join(chat_history))
-    
+    history_text = "\n".join(chat_history)
+
+    reply = qwen_chat(text, history_text)
+
+    chat_history.append(f"Scammer: {text}")
+    chat_history.append(f"You: {reply}")
+
     return {
-        "scammer_message": text,
-        "ai_reply": reply
+        "reply": reply,
+        "history": chat_history[-10:]
     }

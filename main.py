@@ -8,8 +8,11 @@ vectorizer = pickle.load(open("MLmodel/vectorizer.pkl", "rb"))
 
 print("Scam Detection System Ready")
 
+last_scam_message = None
+chat_mode = False  
+
 chat_history = []
-chat_mode = False
+asked_topics = set()
 
 
 def ml_detect(text):
@@ -57,39 +60,48 @@ def final_detect(text):
     return final_result, rule_result, ml_result, llama_result, qwen_result
 
 
-if __name__ == "__main__":
-    while True:
-        text = input("\nEnter message (or type exit): ")
+while True:
+    text = input("\nEnter message (or type exit): ")
 
-        if text.lower() == "exit":
-            break
+    if text.lower() == "exit":
+        break
 
-        if chat_mode:
-            reply = qwen_chat(text)
-            print("\nQwen Reply:", reply)
-            continue
+    if text.lower() == "exit chat":
+        chat_mode = False
+        print("AI chat stopped.")
+        continue
 
-        final_result, rule_r, ml_r, llama_r, qwen_r = final_detect(text)
+    if chat_mode:
+        reply = qwen_chat(text)
+        print("\nQwen Reply:")
+        print(reply)
+        continue
 
-        print("\n--- Detection Results ---")
-        print("Rules Engine:", rule_r)
-        print("ML Model:", ml_r)
-        print("Llama AI:", llama_r)
-        print("Qwen AI:", qwen_r)
-        print("FINAL RESULT:", final_result)
+    final_result, rule_r, ml_r, llama_r, qwen_r = final_detect(text)
 
-        results = {
-            "rules": rule_r,
-            "ml": ml_r,
-            "llama": llama_r,
-            "qwen": qwen_r,
-            "final": final_result
-        }
+    print("\n--- Detection Results ---")
+    print("Rules Engine:", rule_r)
+    print("ML Model:", ml_r)
+    print("Llama AI:", llama_r)
+    print("Qwen AI:", qwen_r)
+    print("FINAL RESULT:", final_result)
 
-        save_log(text, results, chat_history)
+    results = {
+        "rules": rule_r,
+        "ml": ml_r,
+        "llama": llama_r,
+        "qwen": qwen_r,
+        "final": final_result
+    }
 
-        if final_result == "SPAM":
-            chat_mode = True
-            print("\nScam detected! AI chat started automatically.")
-            reply = qwen_chat(text)
-            print("\nQwen Reply:", reply)
+    save_log(text, results, chat_history)
+
+    if final_result == "SPAM":
+        last_scam_message = text
+        chat_mode = True
+
+        print("\nScam detected! AI chat started automatically.")
+
+        reply = qwen_chat(last_scam_message)
+        print("\nQwen Reply:")
+        print(reply)
