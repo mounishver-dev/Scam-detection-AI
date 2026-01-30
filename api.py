@@ -1,17 +1,15 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 
-from main import final_detect   
-from llm import qwen_chat     
+from core import final_detect
+from llm import qwen_chat
 
 app = FastAPI()
 
 class Message(BaseModel):
     text: str
 
-
 chat_history = []
-
 
 @app.post("/detect")
 def detect_message(data: Message):
@@ -28,7 +26,6 @@ def detect_message(data: Message):
         "final_result": final_result
     }
 
-
 @app.post("/chat")
 def chat_with_scammer(data: Message):
     global chat_history
@@ -42,6 +39,5 @@ def chat_with_scammer(data: Message):
     chat_history.append(f"You: {reply}")
 
     return {
-        "reply": reply,
-        "history": chat_history[-10:]
+        "reply": reply
     }
