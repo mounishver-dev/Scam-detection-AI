@@ -1,7 +1,7 @@
 fastapi
 uvicorn
-scikit-learn
 pandas
-groq
 requests
+groq
 pydantic
+scikit-learn==1.6.1
