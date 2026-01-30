@@ -1,29 +1,28 @@
-from core import final_detect, qwen_chat
+# main.py (ONLY for local testing)
 
-print("Scam Detection System Ready")
+if __name__ == "__main__":
+    from core import final_detect, qwen_chat
 
-chat_mode = False
+    print("Scam Detection System Ready")
 
-while True:
-    text = input("\nEnter message (or type exit): ")
+    chat_mode = False
 
-    if text.lower() == "exit":
-        break
+    while True:
+        text = input("\nEnter message (or type exit): ")
 
-    if chat_mode:
-        reply, _ = qwen_chat(text)
-        print("🤖 Qwen:", reply)
-        continue
+        if text.lower() == "exit":
+            break
 
-    result = final_detect(text)
+        if chat_mode:
+            reply, _ = qwen_chat(text)
+            print("🤖 Qwen:", reply)
+            continue
 
-    print("\n--- Detection Results ---")
-    for k, v in result.items():
-        print(f"{k.upper()}: {v}")
+        result = final_detect(text)
 
-    if result["final"] == "SPAM":
-        chat_mode = True
-        print("\n⚠️ Scam detected! AI chat started.")
+        print(result)
 
-        reply, _ = qwen_chat(text)
-        print("🤖 Qwen:", reply)
+        if result["final"] == "SPAM":
+            chat_mode = True
+            reply, _ = qwen_chat(text)
+            print("🤖 Qwen:", reply)
