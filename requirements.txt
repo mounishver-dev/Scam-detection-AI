@@ -5,3 +5,4 @@ requests
 groq
 pydantic
 scikit-learn==1.6.1
+python-dotenv
