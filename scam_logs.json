@@ -1,0 +1,824 @@
+[
+    {
+        "timestamp": "2026-01-29 21:53:07",
+        "message": "Your bank account has been blocked. Verify now",
+        "detection": {
+            "rules": "SPAM",
+            "ml": "SAFE",
+            "llama": "SPAM",
+            "qwen": "SPAM",
+            "final": "SPAM"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": null,
+            "link": null
+        },
+        "chat_history": []
+    },
+    {
+        "timestamp": "2026-01-29 21:53:30",
+        "message": "Your bank account has been blocked. Verify now",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": null,
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: Your bank account has been blocked. Verify now",
+            "You: Which bank?"
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 21:55:15",
+        "message": "Indian bank",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": null,
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: Your bank account has been blocked. Verify now",
+            "You: Which bank?",
+            "Scammer: Indian bank",
+            "You: Which branch?"
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 21:57:34",
+        "message": "send 500 rs to this upi 983248532@idfc.com",
+        "detection": {
+            "rules": "SPAM",
+            "ml": "SAFE",
+            "llama": "SPAM",
+            "qwen": "SPAM",
+            "final": "SPAM"
+        },
+        "scammer_data": {
+            "upi": "983248532@idfc.com",
+            "phone": null,
+            "amount": "500 rs",
+            "link": null
+        },
+        "chat_history": []
+    },
+    {
+        "timestamp": "2026-01-29 21:57:56",
+        "message": "send 500 rs to this upi 983248532@idfc.com",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": "983248532@idfc.com",
+            "phone": null,
+            "amount": "500 rs",
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: send 500 rs to this upi 983248532@idfc.com",
+            "You: Hmm wait, app loading."
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:37:25",
+        "message": "send 500 rs to this upi 983248532@idfc.com",
+        "detection": {
+            "rules": "SPAM",
+            "ml": "SPAM",
+            "llama": "SPAM",
+            "qwen": "SPAM",
+            "final": "SPAM"
+        },
+        "scammer_data": {
+            "upi": "983248532@idfc.com",
+            "phone": null,
+            "amount": "500 rs",
+            "link": null
+        },
+        "chat_history": []
+    },
+    {
+        "timestamp": "2026-01-29 22:37:25",
+        "message": "send 500 rs to this upi 983248532@idfc.com",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": "983248532@idfc.com",
+            "phone": null,
+            "amount": "500 rs",
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: send 500 rs to this upi 983248532@idfc.com",
+            "You: Kya hua? Kaunse deal ya offer hua?"
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:40:29",
+        "message": "send 500 rs to this upi 983248532@idfc.com",
+        "detection": {
+            "rules": "SPAM",
+            "ml": "SPAM",
+            "llama": "SPAM",
+            "qwen": "SPAM",
+            "final": "SPAM"
+        },
+        "scammer_data": {
+            "upi": "983248532@idfc.com",
+            "phone": null,
+            "amount": "500 rs",
+            "link": null
+        },
+        "chat_history": []
+    },
+    {
+        "timestamp": "2026-01-29 22:40:30",
+        "message": "send 500 rs to this upi 983248532@idfc.com",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": "983248532@idfc.com",
+            "phone": null,
+            "amount": "500 rs",
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: send 500 rs to this upi 983248532@idfc.com",
+            "You: App is loading, can you try again?"
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:40:31",
+        "message": "",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": null,
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: send 500 rs to this upi 983248532@idfc.com",
+            "You: App is loading, can you try again?",
+            "Scammer: ",
+            "You: I'm using old phone, try again please."
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:40:59",
+        "message": "send me immediately",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": null,
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: send 500 rs to this upi 983248532@idfc.com",
+            "You: App is loading, can you try again?",
+            "Scammer: ",
+            "You: I'm using old phone, try again please.",
+            "Scammer: send me immediately",
+            "You: My data is not syncing properly."
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:41:06",
+        "message": "now check",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": null,
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: send 500 rs to this upi 983248532@idfc.com",
+            "You: App is loading, can you try again?",
+            "Scammer: ",
+            "You: I'm using old phone, try again please.",
+            "Scammer: send me immediately",
+            "You: My data is not syncing properly.",
+            "Scammer: now check",
+            "You: My balance showing low, how much?"
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:41:22",
+        "message": "500",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": "500",
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: send 500 rs to this upi 983248532@idfc.com",
+            "You: App is loading, can you try again?",
+            "Scammer: ",
+            "You: I'm using old phone, try again please.",
+            "Scammer: send me immediately",
+            "You: My data is not syncing properly.",
+            "Scammer: now check",
+            "You: My balance showing low, how much?",
+            "Scammer: 500",
+            "You: You sent money for what reason?"
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:41:48",
+        "message": "to unblock your account",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": null,
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: ",
+            "You: I'm using old phone, try again please.",
+            "Scammer: send me immediately",
+            "You: My data is not syncing properly.",
+            "Scammer: now check",
+            "You: My balance showing low, how much?",
+            "Scammer: 500",
+            "You: You sent money for what reason?",
+            "Scammer: to unblock your account",
+            "You: Why account got blocked in first place?"
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:42:00",
+        "message": "your out of limit",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": null,
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: send me immediately",
+            "You: My data is not syncing properly.",
+            "Scammer: now check",
+            "You: My balance showing low, how much?",
+            "Scammer: 500",
+            "You: You sent money for what reason?",
+            "Scammer: to unblock your account",
+            "You: Why account got blocked in first place?",
+            "Scammer: your out of limit",
+            "You: What's my limit then, please tell?"
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:42:13",
+        "message": "20k per year",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": null,
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: now check",
+            "You: My balance showing low, how much?",
+            "Scammer: 500",
+            "You: You sent money for what reason?",
+            "Scammer: to unblock your account",
+            "You: Why account got blocked in first place?",
+            "Scammer: your out of limit",
+            "You: What's my limit then, please tell?",
+            "Scammer: 20k per year",
+            "You: How do I check my limit online?"
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:42:21",
+        "message": "not possible",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": null,
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: 500",
+            "You: You sent money for what reason?",
+            "Scammer: to unblock your account",
+            "You: Why account got blocked in first place?",
+            "Scammer: your out of limit",
+            "You: What's my limit then, please tell?",
+            "Scammer: 20k per year",
+            "You: How do I check my limit online?",
+            "Scammer: not possible",
+            "You: How much was the limit earlier then?"
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:42:30",
+        "message": "30k",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": null,
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: to unblock your account",
+            "You: Why account got blocked in first place?",
+            "Scammer: your out of limit",
+            "You: What's my limit then, please tell?",
+            "Scammer: 20k per year",
+            "You: How do I check my limit online?",
+            "Scammer: not possible",
+            "You: How much was the limit earlier then?",
+            "Scammer: 30k",
+            "You: Still not sure of the change in limit."
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:43:17",
+        "message": "it was not our problem if you delay your account will be blocked",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": null,
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: your out of limit",
+            "You: What's my limit then, please tell?",
+            "Scammer: 20k per year",
+            "You: How do I check my limit online?",
+            "Scammer: not possible",
+            "You: How much was the limit earlier then?",
+            "Scammer: 30k",
+            "You: Still not sure of the change in limit.",
+            "Scammer: it was not our problem if you delay your account will be blocked",
+            "You: Delayed my KYC verification too?"
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:43:24",
+        "message": "yes",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": null,
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: 20k per year",
+            "You: How do I check my limit online?",
+            "Scammer: not possible",
+            "You: How much was the limit earlier then?",
+            "Scammer: 30k",
+            "You: Still not sure of the change in limit.",
+            "Scammer: it was not our problem if you delay your account will be blocked",
+            "You: Delayed my KYC verification too?",
+            "Scammer: yes",
+            "You: KYC verification still pending here too."
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:43:30",
+        "message": "yes",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": null,
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: not possible",
+            "You: How much was the limit earlier then?",
+            "Scammer: 30k",
+            "You: Still not sure of the change in limit.",
+            "Scammer: it was not our problem if you delay your account will be blocked",
+            "You: Delayed my KYC verification too?",
+            "Scammer: yes",
+            "You: KYC verification still pending here too.",
+            "Scammer: yes",
+            "You: Still not done with my KYC verification."
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:43:38",
+        "message": "no",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": null,
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: 30k",
+            "You: Still not sure of the change in limit.",
+            "Scammer: it was not our problem if you delay your account will be blocked",
+            "You: Delayed my KYC verification too?",
+            "Scammer: yes",
+            "You: KYC verification still pending here too.",
+            "Scammer: yes",
+            "You: Still not done with my KYC verification.",
+            "Scammer: no",
+            "You: My bank says it's taking time."
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:44:25",
+        "message": "it will work automatically click thiis link http://google.com",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": null,
+            "link": "http://google.com"
+        },
+        "chat_history": [
+            "Scammer: it was not our problem if you delay your account will be blocked",
+            "You: Delayed my KYC verification too?",
+            "Scammer: yes",
+            "You: KYC verification still pending here too.",
+            "Scammer: yes",
+            "You: Still not done with my KYC verification.",
+            "Scammer: no",
+            "You: My bank says it's taking time.",
+            "Scammer: it will work automatically click thiis link http://google.com",
+            "You: What link is this for KYC?"
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:44:47",
+        "message": "no for paying amount",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": null,
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: yes",
+            "You: KYC verification still pending here too.",
+            "Scammer: yes",
+            "You: Still not done with my KYC verification.",
+            "Scammer: no",
+            "You: My bank says it's taking time.",
+            "Scammer: it will work automatically click thiis link http://google.com",
+            "You: What link is this for KYC?",
+            "Scammer: no for paying amount",
+            "You: How much amount do you want?"
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:45:03",
+        "message": "500 to unblock and 500 for kyc completion",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": "500 ",
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: yes",
+            "You: Still not done with my KYC verification.",
+            "Scammer: no",
+            "You: My bank says it's taking time.",
+            "Scammer: it will work automatically click thiis link http://google.com",
+            "You: What link is this for KYC?",
+            "Scammer: no for paying amount",
+            "You: How much amount do you want?",
+            "Scammer: 500 to unblock and 500 for kyc completion",
+            "You: How much for KYC completion?"
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:45:07",
+        "message": "500",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": "500",
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: no",
+            "You: My bank says it's taking time.",
+            "Scammer: it will work automatically click thiis link http://google.com",
+            "You: What link is this for KYC?",
+            "Scammer: no for paying amount",
+            "You: How much amount do you want?",
+            "Scammer: 500 to unblock and 500 for kyc completion",
+            "You: How much for KYC completion?",
+            "Scammer: 500",
+            "You: Why two 500 rupees fees?"
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:45:23",
+        "message": "yes it is order form main branch",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": null,
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: it will work automatically click thiis link http://google.com",
+            "You: What link is this for KYC?",
+            "Scammer: no for paying amount",
+            "You: How much amount do you want?",
+            "Scammer: 500 to unblock and 500 for kyc completion",
+            "You: How much for KYC completion?",
+            "Scammer: 500",
+            "You: Why two 500 rupees fees?",
+            "Scammer: yes it is order form main branch",
+            "You: What's main branch order form mean?"
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:45:44",
+        "message": "*from ",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": null,
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: no for paying amount",
+            "You: How much amount do you want?",
+            "Scammer: 500 to unblock and 500 for kyc completion",
+            "You: How much for KYC completion?",
+            "Scammer: 500",
+            "You: Why two 500 rupees fees?",
+            "Scammer: yes it is order form main branch",
+            "You: What's main branch order form mean?",
+            "Scammer: *from ",
+            "You: You cut off, can you send again?"
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:46:05",
+        "message": "it is from main branch not from us",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": null,
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: 500 to unblock and 500 for kyc completion",
+            "You: How much for KYC completion?",
+            "Scammer: 500",
+            "You: Why two 500 rupees fees?",
+            "Scammer: yes it is order form main branch",
+            "You: What's main branch order form mean?",
+            "Scammer: *from ",
+            "You: You cut off, can you send again?",
+            "Scammer: it is from main branch not from us",
+            "You: You mean our side's fee?\nMy phone's battery's low."
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:46:39",
+        "message": "yes so send it quickly to this account number 98343423",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": "98343423",
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: 500",
+            "You: Why two 500 rupees fees?",
+            "Scammer: yes it is order form main branch",
+            "You: What's main branch order form mean?",
+            "Scammer: *from ",
+            "You: You cut off, can you send again?",
+            "Scammer: it is from main branch not from us",
+            "You: You mean our side's fee?\nMy phone's battery's low.",
+            "Scammer: yes so send it quickly to this account number 98343423",
+            "You: My battery's dying, charge it first."
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:47:39",
+        "message": "if you not pay then your account will be blocked",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": null,
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: yes it is order form main branch",
+            "You: What's main branch order form mean?",
+            "Scammer: *from ",
+            "You: You cut off, can you send again?",
+            "Scammer: it is from main branch not from us",
+            "You: You mean our side's fee?\nMy phone's battery's low.",
+            "Scammer: yes so send it quickly to this account number 98343423",
+            "You: My battery's dying, charge it first.",
+            "Scammer: if you not pay then your account will be blocked",
+            "You: What's bank fee for this order?"
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:47:47",
+        "message": "500",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": "500",
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: *from ",
+            "You: You cut off, can you send again?",
+            "Scammer: it is from main branch not from us",
+            "You: You mean our side's fee?\nMy phone's battery's low.",
+            "Scammer: yes so send it quickly to this account number 98343423",
+            "You: My battery's dying, charge it first.",
+            "Scammer: if you not pay then your account will be blocked",
+            "You: What's bank fee for this order?",
+            "Scammer: 500",
+            "You: How much total amount will it be?"
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:47:52",
+        "message": "500",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": "500",
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: it is from main branch not from us",
+            "You: You mean our side's fee?\nMy phone's battery's low.",
+            "Scammer: yes so send it quickly to this account number 98343423",
+            "You: My battery's dying, charge it first.",
+            "Scammer: if you not pay then your account will be blocked",
+            "You: What's bank fee for this order?",
+            "Scammer: 500",
+            "You: How much total amount will it be?",
+            "Scammer: 500",
+            "You: My bank's server's down today?"
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:48:13",
+        "message": "ok no problem send me within 1 hour",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": "1 ",
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: yes so send it quickly to this account number 98343423",
+            "You: My battery's dying, charge it first.",
+            "Scammer: if you not pay then your account will be blocked",
+            "You: What's bank fee for this order?",
+            "Scammer: 500",
+            "You: How much total amount will it be?",
+            "Scammer: 500",
+            "You: My bank's server's down today?",
+            "Scammer: ok no problem send me within 1 hour",
+            "You: What's the order number again, bro?"
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:48:25",
+        "message": "32422123222",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": "32422123222",
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: if you not pay then your account will be blocked",
+            "You: What's bank fee for this order?",
+            "Scammer: 500",
+            "You: How much total amount will it be?",
+            "Scammer: 500",
+            "You: My bank's server's down today?",
+            "Scammer: ok no problem send me within 1 hour",
+            "You: What's the order number again, bro?",
+            "Scammer: 32422123222",
+            "You: What's the order name I should check?"
+        ]
+    },
+    {
+        "timestamp": "2026-01-29 22:48:41",
+        "message": "Rajasekar",
+        "detection": {
+            "mode": "chat"
+        },
+        "scammer_data": {
+            "upi": null,
+            "phone": null,
+            "amount": null,
+            "link": null
+        },
+        "chat_history": [
+            "Scammer: 500",
+            "You: How much total amount will it be?",
+            "Scammer: 500",
+            "You: My bank's server's down today?",
+            "Scammer: ok no problem send me within 1 hour",
+            "You: What's the order number again, bro?",
+            "Scammer: 32422123222",
+            "You: What's the order name I should check?",
+            "Scammer: Rajasekar",
+            "You: Still waiting for payment confirmation."
+        ]
+    }
+]
