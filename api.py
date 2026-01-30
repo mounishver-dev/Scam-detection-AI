@@ -17,8 +17,8 @@ def detect(data: Message):
 
 @app.post("/chat")
 def chat(data: Message):
-    reply, history = qwen_chat(data.text)
+    reply = qwen_chat(data.text)
     return {
-        "reply": reply,
-        "history": history
+        "reply": reply
     }
+

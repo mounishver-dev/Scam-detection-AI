@@ -26,7 +26,8 @@ def qwen_chat(scammer_message):
     chat_history.append(f"You: {reply}")
     save_log(scammer_message, {"mode": "chat"}, chat_history)
 
-    return reply
+    return reply, chat_history
+
 
 def final_detect(text):
     rule_result = rule_detect(text)
