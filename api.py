@@ -1,43 +1,24 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-
-from core import final_detect
-from llm import qwen_chat
+from core import final_detect, qwen_chat
 
 app = FastAPI()
 
 class Message(BaseModel):
     text: str
 
-chat_history = []
+@app.get("/")
+def home():
+    return {"status": "Scam Detection API Running"}
 
 @app.post("/detect")
-def detect_message(data: Message):
-    text = data.text
-
-    final_result, rule_r, ml_r, llama_r, qwen_r = final_detect(text)
-
-    return {
-        "text": text,
-        "rules": rule_r,
-        "ml": ml_r,
-        "llm_llama": llama_r,
-        "llm_qwen": qwen_r,
-        "final_result": final_result
-    }
+def detect(data: Message):
+    return final_detect(data.text)
 
 @app.post("/chat")
-def chat_with_scammer(data: Message):
-    global chat_history
-
-    text = data.text
-    history_text = "\n".join(chat_history)
-
-    reply = qwen_chat(text, history_text)
-
-    chat_history.append(f"Scammer: {text}")
-    chat_history.append(f"You: {reply}")
-
+def chat(data: Message):
+    reply, history = qwen_chat(data.text)
     return {
-        "reply": reply
+        "reply": reply,
+        "history": history
     }
