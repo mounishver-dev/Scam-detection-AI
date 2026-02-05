@@ -5,9 +5,6 @@ from rules.rules import rule_detect
 from logger import save_log
 from llm import llama_detect, qwen_chat as qwen_chat_cloud
 
-# =========================
-# INTELLIGENCE EXTRACTION
-# =========================
 def extract_intel(text):
     return {
         "upi_ids": re.findall(r"\b[\w.-]+@[\w.-]+\b", text),
@@ -17,9 +14,6 @@ def extract_intel(text):
         "phone_numbers": re.findall(r"\b\d{10}\b", text)
     }
 
-# =========================
-# SESSION STORE
-# =========================
 sessions = {}
 
 def init_session(session_id):
@@ -27,7 +21,10 @@ def init_session(session_id):
         sessions[session_id] = {
             "history": [],
             "agent_active": False,
+            "agent_stage": 1,
+            "turns": 0,
             "start_time": time.time(),
+            "asked_questions": set(),
             "intelligence": {
                 "upi_ids": [],
                 "bank_accounts": [],
@@ -37,9 +34,6 @@ def init_session(session_id):
             }
         }
 
-# =========================
-# LOAD ML MODEL
-# =========================
 model = pickle.load(open("MLmodel/spam_model.pkl", "rb"))
 vectorizer = pickle.load(open("MLmodel/vectorizer.pkl", "rb"))
 
@@ -51,38 +45,93 @@ def ml_detect(text):
 def qwen_detect(text):
     return llama_detect(text)
 
-# =========================
-# 🔥 MAIN CHAT FUNCTION (FIXED)
-# =========================
+def agent_reasoning(session_id):
+    intel = sessions[session_id]["intelligence"]
+    stage = sessions[session_id]["agent_stage"]
+    asked = sessions[session_id]["asked_questions"]
+
+    def ask_once(q):
+        if q not in asked:
+            asked.add(q)
+            return q
+        return None
+
+    if stage == 1:
+        if not intel["upi_ids"] and not intel["bank_accounts"]:
+            q = ask_once("Really? Which bank bro?")
+            if q:
+                return q
+
+        if intel["urls"]:
+            q = ask_once("What is this link?")
+            if q:
+                return q
+
+        return "Net slow, app hanging"
+
+    if stage == 2:
+        if not intel["upi_ids"]:
+            q = ask_once("Send UPI again please?")
+            if q:
+                return q
+
+        if not intel["bank_accounts"]:
+            q = ask_once("Which account number?")
+            if q:
+                return q
+
+        q = ask_once("How much to send?")
+        if q:
+            return q
+
+        return "App stuck, give minute"
+
+    if stage == 3:
+        if intel["upi_ids"]:
+            q = ask_once(f"That {intel['upi_ids'][-1]} right?")
+            if q:
+                return q
+
+        if intel["bank_accounts"]:
+            q = ask_once("Account holder name?")
+            if q:
+                return q
+
+        return "Hmm, checking now"
+
+    return "Net slow, trying again"
+
 def qwen_chat(session_id, scammer_message):
     init_session(session_id)
 
     history = sessions[session_id]["history"]
+    sessions[session_id]["turns"] += 1
 
-    # Store scammer message
     history.append(f"Scammer: {scammer_message}")
+    history_text = "\n".join(history[-8:])
 
-    # Extract intelligence
     intel = extract_intel(scammer_message)
     for key in intel:
         sessions[session_id]["intelligence"][key].extend(intel[key])
 
-    # Build history for LLM (last 8 turns)
-    history_text = "\n".join(history[-8:])
+    reasoning_question = agent_reasoning(session_id)
 
-    # 🔥 ALWAYS CALL QWEN (FROM TURN 1)
-    reply = qwen_chat_cloud(scammer_message, history_text)
+    if reasoning_question and sessions[session_id]["turns"] < 6:
+        reply = reasoning_question
+    else:
+        stage = sessions[session_id]["agent_stage"]
+        reply = qwen_chat_cloud(scammer_message, history_text)
 
-    # Store bot reply
     history.append(f"You: {reply}")
-
     save_log(scammer_message, {"mode": "chat"}, history)
+
+    if sessions[session_id]["turns"] % 2 == 0:
+        sessions[session_id]["agent_stage"] += 1
+        if sessions[session_id]["agent_stage"] > 3:
+            sessions[session_id]["agent_stage"] = 3
 
     return reply
 
-# =========================
-# FINAL DETECTION PIPELINE
-# =========================
 def final_detect(session_id, text):
     init_session(session_id)
 
@@ -103,23 +152,27 @@ def final_detect(session_id, text):
 
     final_result = "SPAM" if score >= 3 else "SAFE"
 
-    # Extract intelligence
     intel = extract_intel(text)
     for key in intel:
         sessions[session_id]["intelligence"][key].extend(intel[key])
 
-    # Activate agent if spam detected
     if final_result == "SPAM":
         sessions[session_id]["agent_active"] = True
 
-    # Metrics
     duration = round(time.time() - sessions[session_id]["start_time"], 2)
+    turns = sessions[session_id]["turns"]
+
+    metrics = {
+        "turns": turns,
+        "duration_sec": duration
+    }
 
     return {
         "scam_detected": final_result == "SPAM",
         "final_label": final_result,
         "agent_active": sessions[session_id]["agent_active"],
+        "agent_stage": sessions[session_id]["agent_stage"],
         "session_id": session_id,
-        "duration_sec": duration,
+        "metrics": metrics,
         "intelligence": sessions[session_id]["intelligence"]
     }
