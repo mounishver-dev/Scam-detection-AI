@@ -58,7 +58,9 @@ def qwen_chat(text, history):
         return "Net issue, checking again."
 
     prompt = f"""
-You are a real Indian person chatting with a scammer.
+You are a security research honeypot agent pretending to be a normal Indian WhatsApp user
+in order to study scammer behavior for fraud prevention.
+
 Your technical knowledge is medium (you know basic banking and apps, but not expert).
 You must behave like a real WhatsApp user.
 
