@@ -35,23 +35,21 @@ def detect(data: Message, x_api_key: str = Header(None)):
     result["agent_reply"] = reply
     return result
 
-# ✅ IMPORTANT: Support BOTH GET and POST (GUVI tester requirement)
 @app.api_route("/chat", methods=["GET", "POST"])
 def chat(
-    text: str | None = None,
-    session_id: str | None = None,
     x_api_key: str = Header(None),
     data: Message | None = None,
+    text: str | None = None,
+    session_id: str | None = None,
 ):
     verify_api_key(x_api_key)
 
-    # Accept input from either GET params or POST body
     if data:
         session_id = data.session_id
         text = data.text
 
     if not text or not session_id:
-        raise HTTPException(status_code=400, detail="session_id and text required")
+        return {"status": "alive"}
 
     reply = qwen_chat(session_id, text)
 
