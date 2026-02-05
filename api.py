@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Header, HTTPException
+from fastapi import FastAPI, Header, HTTPException, Request
 from pydantic import BaseModel
 from core import final_detect, qwen_chat
 import os
@@ -10,8 +10,8 @@ API_KEY = os.getenv("API_KEY")
 app = FastAPI()
 
 class Message(BaseModel):
-    session_id: str
-    text: str
+    session_id: str | None = None
+    text: str | None = None
 
 def verify_api_key(x_api_key: str = Header(None)):
     if not x_api_key or x_api_key != API_KEY:
@@ -25,16 +25,45 @@ def home():
 def detect(data: Message, x_api_key: str = Header(None)):
     verify_api_key(x_api_key)
 
-    result = final_detect(data.session_id, data.text)
+    session_id = data.session_id or "default_session"
+    text = data.text or ""
+
+    result = final_detect(session_id, text)
 
     if result.get("agent_active", False):
-        reply = qwen_chat(data.session_id, data.text)
+        reply = qwen_chat(session_id, text)
     else:
         reply = None
 
     result["agent_reply"] = reply
     return result
 
+# ======= 🔥 GUVI-FRIENDLY ENDPOINT 🔥 =======
+@app.post("/chat")
+async def chat(request: Request, x_api_key: str = Header(None)):
+    verify_api_key(x_api_key)
+
+    body = await request.json()
+
+    # Accept ANY shape from GUVI
+    text = (
+        body.get("text") or
+        body.get("message") or
+        body.get("input") or
+        ""
+    )
+
+    session_id = body.get("session_id") or "guvi_session"
+
+    if not text:
+        return {"reply": "Hi! Please send a message."}
+
+    reply = qwen_chat(session_id, text)
+
+    return {
+        "session_id": session_id,
+        "reply": reply
+    }
 @app.api_route("/chat", methods=["GET", "POST"])
 def chat(
     x_api_key: str = Header(None),
