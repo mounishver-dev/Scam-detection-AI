@@ -1,13 +1,15 @@
 from fastapi import FastAPI, Header, HTTPException, Request
 from pydantic import BaseModel
-from core import final_detect, qwen_chat
 import os
 from dotenv import load_dotenv
+
+# Import your core logic
+from core import final_detect, qwen_chat  
 
 load_dotenv()
 API_KEY = os.getenv("API_KEY")
 
-app = FastAPI()
+app = FastAPI(title="Scam Detection Honeypot API")
 
 class Message(BaseModel):
     session_id: str | None = None
@@ -19,8 +21,13 @@ def verify_api_key(x_api_key: str = Header(None)):
 
 @app.get("/")
 def home():
-    return {"status": "Scam Detection API Running"}
+    return {
+        "status": "online",
+        "service": "Scam Detection Honeypot",
+        "version": "1.0"
+    }
 
+# ----------- DETECTION ENDPOINT -----------
 @app.post("/detect")
 def detect(data: Message, x_api_key: str = Header(None)):
     verify_api_key(x_api_key)
@@ -28,24 +35,40 @@ def detect(data: Message, x_api_key: str = Header(None)):
     session_id = data.session_id or "default_session"
     text = data.text or ""
 
-    result = final_detect(session_id, text)
+    try:
+        result = final_detect(session_id, text)
+    except Exception as e:
+        return {
+            "error": "detection_failed",
+            "message": str(e)
+        }
 
-    if result.get("agent_active", False):
-        reply = qwen_chat(session_id, text)
-    else:
-        reply = None
+    # If agent should respond
+    agent_reply = None
+    if isinstance(result, dict) and result.get("agent_active", False):
+        try:
+            agent_reply = qwen_chat(session_id, text)
+        except:
+            agent_reply = "Hmm, network issue."
 
-    result["agent_reply"] = reply
-    return result
+    return {
+        "session_id": session_id,
+        "text": text,
+        "result": result,
+        "agent_reply": agent_reply
+    }
 
-# ======= 🔥 GUVI-FRIENDLY ENDPOINT 🔥 =======
+# ----------- GUVI HONEYPOT ENDPOINT (MOST IMPORTANT) -----------
 @app.post("/chat")
 async def chat(request: Request, x_api_key: str = Header(None)):
     verify_api_key(x_api_key)
 
-    body = await request.json()
+    try:
+        body = await request.json()
+    except:
+        body = {}
 
-    # Accept ANY shape from GUVI
+    # Accept ANY possible field name from GUVI
     text = (
         body.get("text") or
         body.get("message") or
@@ -56,31 +79,15 @@ async def chat(request: Request, x_api_key: str = Header(None)):
     session_id = body.get("session_id") or "guvi_session"
 
     if not text:
-        return {"reply": "Hi! Please send a message."}
+        return {
+            "session_id": session_id,
+            "reply": "Hi, what happened?"
+        }
 
-    reply = qwen_chat(session_id, text)
-
-    return {
-        "session_id": session_id,
-        "reply": reply
-    }
-@app.api_route("/chat", methods=["GET", "POST"])
-def chat(
-    x_api_key: str = Header(None),
-    data: Message | None = None,
-    text: str | None = None,
-    session_id: str | None = None,
-):
-    verify_api_key(x_api_key)
-
-    if data:
-        session_id = data.session_id
-        text = data.text
-
-    if not text or not session_id:
-        return {"status": "alive"}
-
-    reply = qwen_chat(session_id, text)
+    try:
+        reply = qwen_chat(session_id, text)
+    except Exception as e:
+        reply = "Hmm, app issue. One minute."
 
     return {
         "session_id": session_id,
