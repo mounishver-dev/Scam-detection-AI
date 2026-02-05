@@ -2,14 +2,12 @@ from fastapi import FastAPI, Header, HTTPException, Request
 from pydantic import BaseModel
 import os
 from dotenv import load_dotenv
-from core import final_detect, qwen_chat, sessions
+from core import final_detect, qwen_chat, init_session
 
 load_dotenv()
 API_KEY = os.getenv("API_KEY")
 
 app = FastAPI()
-
-chat_sessions = {}
 
 class Message(BaseModel):
     session_id: str | None = None
@@ -23,6 +21,17 @@ def verify_api_key(x_api_key: str = Header(None)):
 def home():
     return {"status": "Scam Detection API Running"}
 
+# ---------- DETECTION ENDPOINT (Optional for you) ----------
+@app.post("/detect")
+async def detect(data: Message, x_api_key: str = Header(None)):
+    verify_api_key(x_api_key)
+
+    session_id = data.session_id or "guvi_session"
+    result = final_detect(session_id, data.text)
+
+    return result
+
+# ---------- MAIN HONEYPOT CHAT ENDPOINT (GUVI USES THIS) ----------
 @app.post("/chat")
 async def chat(request: Request, x_api_key: str = Header(None)):
     verify_api_key(x_api_key)
@@ -31,10 +40,19 @@ async def chat(request: Request, x_api_key: str = Header(None)):
     text = body.get("text", "")
     session_id = body.get("session_id", "guvi_session")
 
-    # Run detection first (this also updates intelligence in core.py)
-    detect_result = final_detect(session_id, text)
+    # 🔥 IMPORTANT: Always initialize session first
+    init_session(session_id)
 
-    # Get agent reply
+    try:
+        reply = qwen_chat(session_id, text)
+    except Exception as e:
+        print("Chat error:", e)
+        reply = "Hmm net slow, which bank?"
+
+    return {
+        "session_id": session_id,
+        "reply": reply
+    }    # Get agent reply
     try:
         reply = qwen_chat(session_id, text)
     except Exception:
