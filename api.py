@@ -1,8 +1,7 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Header, HTTPException
 from pydantic import BaseModel
 from core import final_detect, qwen_chat
 import os
-from fastapi import Header, HTTPException
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -11,11 +10,11 @@ API_KEY = os.getenv("API_KEY")
 app = FastAPI()
 
 class Message(BaseModel):
-    session_id: str 
+    session_id: str
     text: str
 
 def verify_api_key(x_api_key: str = Header(None)):
-    if x_api_key != API_KEY:
+    if not x_api_key or x_api_key != API_KEY:
         raise HTTPException(status_code=401, detail="Invalid API Key")
 
 @app.get("/")
@@ -28,22 +27,35 @@ def detect(data: Message, x_api_key: str = Header(None)):
 
     result = final_detect(data.session_id, data.text)
 
-    if result["agent_active"]:
+    if result.get("agent_active", False):
         reply = qwen_chat(data.session_id, data.text)
     else:
         reply = None
 
     result["agent_reply"] = reply
-
     return result
 
-
-
-
-@app.post("/chat")
-def chat(data: Message, x_api_key: str = Header(None)):
+# ✅ IMPORTANT: Support BOTH GET and POST (GUVI tester requirement)
+@app.api_route("/chat", methods=["GET", "POST"])
+def chat(
+    text: str | None = None,
+    session_id: str | None = None,
+    x_api_key: str = Header(None),
+    data: Message | None = None,
+):
     verify_api_key(x_api_key)
-    reply = qwen_chat(data.session_id, data.text)
-    return {"reply": reply}
 
+    # Accept input from either GET params or POST body
+    if data:
+        session_id = data.session_id
+        text = data.text
 
+    if not text or not session_id:
+        raise HTTPException(status_code=400, detail="session_id and text required")
+
+    reply = qwen_chat(session_id, text)
+
+    return {
+        "session_id": session_id,
+        "reply": reply
+    }
