@@ -3,13 +3,15 @@ from pydantic import BaseModel
 import os
 from dotenv import load_dotenv
 
-# Import your core logic
-from core import final_detect, qwen_chat  
+from core import final_detect, qwen_chat
 
 load_dotenv()
 API_KEY = os.getenv("API_KEY")
 
-app = FastAPI(title="Scam Detection Honeypot API")
+app = FastAPI()
+
+# 🔹 Store chat history PER SESSION
+chat_sessions = {}
 
 class Message(BaseModel):
     session_id: str | None = None
@@ -21,13 +23,8 @@ def verify_api_key(x_api_key: str = Header(None)):
 
 @app.get("/")
 def home():
-    return {
-        "status": "online",
-        "service": "Scam Detection Honeypot",
-        "version": "1.0"
-    }
+    return {"status": "Scam Detection API Running"}
 
-# ----------- DETECTION ENDPOINT -----------
 @app.post("/detect")
 def detect(data: Message, x_api_key: str = Header(None)):
     verify_api_key(x_api_key)
@@ -35,61 +32,47 @@ def detect(data: Message, x_api_key: str = Header(None)):
     session_id = data.session_id or "default_session"
     text = data.text or ""
 
-    try:
-        result = final_detect(session_id, text)
-    except Exception as e:
-        return {
-            "error": "detection_failed",
-            "message": str(e)
-        }
+    result = final_detect(session_id, text)
 
-    # If agent should respond
-    agent_reply = None
-    if isinstance(result, dict) and result.get("agent_active", False):
-        try:
-            agent_reply = qwen_chat(session_id, text)
-        except:
-            agent_reply = "Hmm, network issue."
+    reply = None
+    if result.get("agent_active"):
+        reply = qwen_chat(session_id, text)
 
     return {
         "session_id": session_id,
         "text": text,
         "result": result,
-        "agent_reply": agent_reply
+        "agent_reply": reply
     }
 
-# ----------- GUVI HONEYPOT ENDPOINT (MOST IMPORTANT) -----------
+# 🔹 MAIN HONEYPOT ENDPOINT FOR GUVI
 @app.post("/chat")
 async def chat(request: Request, x_api_key: str = Header(None)):
     verify_api_key(x_api_key)
 
-    try:
-        body = await request.json()
-    except:
-        body = {}
-
-    # Accept ANY possible field name from GUVI
-    text = (
-        body.get("text") or
-        body.get("message") or
-        body.get("input") or
-        ""
-    )
-
+    body = await request.json()
+    text = body.get("text") or body.get("message") or ""
     session_id = body.get("session_id") or "guvi_session"
 
-    if not text:
-        return {
-            "session_id": session_id,
-            "reply": "Hi, what happened?"
-        }
+    # Initialize chat history if new session
+    if session_id not in chat_sessions:
+        chat_sessions[session_id] = []
 
+    # Add scammer message to history
+    chat_sessions[session_id].append(f"Scammer: {text}")
+
+    # Generate reply using YOUR LLM chat logic
     try:
+        history_text = "\n".join(chat_sessions[session_id][-8:])
         reply = qwen_chat(session_id, text)
     except Exception as e:
         reply = "Hmm, app issue. One minute."
 
+    # Store bot reply
+    chat_sessions[session_id].append(f"You: {reply}")
+
     return {
         "session_id": session_id,
-        "reply": reply
+        "reply": reply,
+        "history": chat_sessions[session_id][-6:]
     }
