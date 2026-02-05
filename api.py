@@ -52,17 +52,4 @@ async def chat(request: Request, x_api_key: str = Header(None)):
         "collected_intelligence": detect_result["intelligence"],
         "metrics": detect_result["metrics"],
         "recent_history": session_data.get("history", [])[-6:]
-    }    chat_sessions[session_id].append(f"Scammer: {text}")
-
-    try:
-        reply = qwen_chat(session_id, text)
-    except Exception:
-        reply = "Hmm net slow, which bank?"
-
-    chat_sessions[session_id].append(f"You: {reply}")
-
-    return {
-        "session_id": session_id,
-        "reply": reply,
-        "history": chat_sessions[session_id][-6:]
     }
